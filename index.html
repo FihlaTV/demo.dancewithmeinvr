@@ -14,23 +14,52 @@ startUpTHREEjs({
 	
 	demo.renderer.setClearColor('#444',1)
 	
-	var character	= new THREEx.MinecraftChar()
-	character.root.position.z = -5
-	demo.scene.add(character.root)
+	var distanceCharacter = 2
+	
+	var character = createCharacter()
+	character.root.position.x = 0
+	character.root.position.z = -distanceCharacter
+	character.loadWellKnownSkin('3djesus')
+
+	var character = createCharacter()
+	character.root.position.x = -distanceCharacter
+	character.root.position.z = 0
+	character.root.rotateY(Math.PI/2)
+	character.loadWellKnownSkin('agentsmith')
+	
+
+	var character = createCharacter()
+	character.root.position.x = 0
+	character.root.position.z = +distanceCharacter	
+	character.root.rotateY(Math.PI)
+
+	var character = createCharacter()
+	character.root.position.x = +distanceCharacter
+	character.root.position.z = 0	
+	character.root.rotateY(-Math.PI/2)
+	character.loadWellKnownSkin('agentsmith')	
+	
+	function createCharacter(){
+		var character	= new THREEx.MinecraftChar()
+		demo.scene.add(character.root)
 
 
-	var headAnims	= new THREEx.MinecraftCharHeadAnimations(character);
-	demo.onRenderFcts.push(function(delta, now){
-		headAnims.update(delta, now)	
-	})
-	headAnims.start('yes');
+		var headAnims	= new THREEx.MinecraftCharHeadAnimations(character);
+		demo.onRenderFcts.push(function(delta, now){
+			headAnims.update(delta, now)	
+		})
+		headAnims.start('yes');
 
 
-	// init bodyAnims
-	var bodyAnims	= new THREEx.MinecraftCharBodyAnimations(character);
-	demo.onRenderFcts.push(function(delta, now){
-		bodyAnims.update(delta, now)	
-	})
-	bodyAnims.start('walk');
+		// init bodyAnims
+		var bodyAnims	= new THREEx.MinecraftCharBodyAnimations(character);
+		demo.onRenderFcts.push(function(delta, now){
+			bodyAnims.update(delta, now)	
+		})
+		bodyAnims.start('walk');
+		
+		return character		
+	}
+	
 })
 </script></body>
