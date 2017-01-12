@@ -13,8 +13,15 @@ startUpTHREEjs({
 },function(demo){
 	
 	demo.renderer.setClearColor('#444',1)
+
+// function GridHelper( size, divisions, color1, color2 ) {
 	
-	var distanceCharacter = 2
+	var ground = new THREE.GridHelper(5,50)
+	// var ground = new THREE.Group
+	ground.position.y = -1.5
+	demo.scene.add(ground)
+	
+	var distanceCharacter = 2.5
 	
 	var character = createCharacter()
 	character.root.position.x = 0
@@ -37,11 +44,15 @@ startUpTHREEjs({
 	character.root.position.x = +distanceCharacter
 	character.root.position.z = 0	
 	character.root.rotateY(-Math.PI/2)
-	character.loadWellKnownSkin('agentsmith')	
+	character.loadWellKnownSkin('agentsmith')
 	
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
 	function createCharacter(){
 		var character	= new THREEx.MinecraftChar()
-		demo.scene.add(character.root)
+		character.root.scale.set(1,1,1).multiplyScalar(1.7)	// height in meter
+		ground.add(character.root)
 
 
 		var headAnims	= new THREEx.MinecraftCharHeadAnimations(character);
@@ -74,6 +85,5 @@ startUpTHREEjs({
 		
 		return character		
 	}
-	
 })
 </script></body>
