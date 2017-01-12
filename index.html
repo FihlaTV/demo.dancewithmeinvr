@@ -1,0 +1,27 @@
+<script src='https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.6.1/startupThree.js'></script>
+<script src='vendor/threex.minecraft.js/threex.minecraft.js'></script>
+<script>THREEx.MinecraftChar.baseUrl = 'vendor/threex.minecraft.js/'</script>
+
+<body><script>
+startUpTHREEjs({
+	webvr: true
+},function(demo){
+	
+	var character	= new THREEx.MinecraftChar()
+	character.root.position.z = -5
+	demo.scene.add(character.root)
+	
+	// create mesh
+	var geometry = new THREE.TorusGeometry(1, 0.5)
+	var material = new THREE.MeshNormalMaterial()
+	var mesh = new THREE.Mesh(geometry, material)
+	mesh.position.z = -4
+	// add mesh to scene
+	demo.scene.add(mesh)
+	// make mesh move
+	demo.onRenderFcts.push(function(delta){
+		mesh.rotation.x += Math.PI*2 * delta * 0.1
+		mesh.rotation.y += Math.PI*2 * delta * 0.1
+	})
+})
+</script></body>
