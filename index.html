@@ -49,6 +49,13 @@ startUpTHREEjs({
 			headAnims.update(delta, now)	
 		})
 		headAnims.start('yes');
+		// change periodically the animation
+		setInterval(function(){
+			var animationNames = headAnims.names()
+			var index = Math.floor(animationNames.length * Math.random())
+			var animationName = animationNames[index]
+			headAnims.start(animationName);			
+		}, 1000)
 
 
 		// init bodyAnims
@@ -57,6 +64,13 @@ startUpTHREEjs({
 			bodyAnims.update(delta, now)	
 		})
 		bodyAnims.start('walk');
+		// change periodically the animation
+		setInterval(function(){
+			var animationNames = bodyAnims.names()
+			var index = Math.floor(animationNames.length * Math.random())
+			var animationName = animationNames[index]
+			bodyAnims.start(animationName);			
+		}, 1000)
 		
 		return character		
 	}
