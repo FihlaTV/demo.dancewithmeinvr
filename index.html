@@ -1,27 +1,36 @@
 <script src='https://cdn.rawgit.com/jeromeetienne/startupthree.js/0.6.1/startupThree.js'></script>
 <script src='vendor/threex.minecraft.js/threex.minecraft.js'></script>
 <script>THREEx.MinecraftChar.baseUrl = 'vendor/threex.minecraft.js/'</script>
+<!-- include animation -->
+<script src='vendor/threex.minecraft.js/threex.animation.js'></script>
+<script src='vendor/threex.minecraft.js/threex.animations.js'></script>
+<script src='vendor/threex.minecraft.js/threex.minecraftcharheadanim.js'></script>
+<script src='vendor/threex.minecraft.js/threex.minecraftcharbodyanim.js'></script>
 
 <body><script>
 startUpTHREEjs({
 	webvr: true
 },function(demo){
 	
+	demo.renderer.setClearColor('#444',1)
+	
 	var character	= new THREEx.MinecraftChar()
 	character.root.position.z = -5
 	demo.scene.add(character.root)
-	
-	// create mesh
-	var geometry = new THREE.TorusGeometry(1, 0.5)
-	var material = new THREE.MeshNormalMaterial()
-	var mesh = new THREE.Mesh(geometry, material)
-	mesh.position.z = -4
-	// add mesh to scene
-	demo.scene.add(mesh)
-	// make mesh move
-	demo.onRenderFcts.push(function(delta){
-		mesh.rotation.x += Math.PI*2 * delta * 0.1
-		mesh.rotation.y += Math.PI*2 * delta * 0.1
+
+
+	var headAnims	= new THREEx.MinecraftCharHeadAnimations(character);
+	demo.onRenderFcts.push(function(delta, now){
+		headAnims.update(delta, now)	
 	})
+	headAnims.start('yes');
+
+
+	// init bodyAnims
+	var bodyAnims	= new THREEx.MinecraftCharBodyAnimations(character);
+	demo.onRenderFcts.push(function(delta, now){
+		bodyAnims.update(delta, now)	
+	})
+	bodyAnims.start('walk');
 })
 </script></body>
