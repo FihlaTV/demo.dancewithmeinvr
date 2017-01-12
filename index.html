@@ -9,19 +9,57 @@
 
 <body><script>
 startUpTHREEjs({
-	webvr: true
+	webvr: true,
+	webvrPolyfillPointerLock : true
 },function(demo){
 	
 	demo.renderer.setClearColor('#444',1)
 
-// function GridHelper( size, divisions, color1, color2 ) {
-	
-	var ground = new THREE.GridHelper(5,50)
-	// var ground = new THREE.Group
-	ground.position.y = -1.5
-	demo.scene.add(ground)
-	
 	var distanceCharacter = 2.5
+	
+	//////////////////////////////////////////////////////////////////////////////
+	//		add lights
+	//////////////////////////////////////////////////////////////////////////////
+	var light	= new THREE.AmbientLight(0x101010)
+	light.name	= 'Ambient light'
+	demo.scene.add(light)
+
+	var light	= new THREE.DirectionalLight('white', 0.225)
+	light.position.set(2.6,1,3)
+	light.name	= 'Back light'
+	demo.scene.add(light)
+
+	var light	= new THREE.DirectionalLight('white', 0.375)
+	light.position.set(-2, -1, 0)
+	light.name 	= 'Key light'
+	demo.scene.add(light)
+
+	var light	= new THREE.DirectionalLight('white', 0.75)
+	light.position.set(3, 3, 2)
+	light.name	= 'Fill light'
+	demo.scene.add(light)
+	//////////////////////////////////////////////////////////////////////////////
+	//		Code Separator
+	//////////////////////////////////////////////////////////////////////////////
+	
+	THREEx.MinecraftChar.defaultMaterial = THREE.MeshLambertMaterial
+	
+	var groundRoot = new THREE.Group
+	groundRoot.position.y = -1.5
+	demo.scene.add(groundRoot)
+
+	var geometry = new THREE.PlaneGeometry(distanceCharacter*4,distanceCharacter*4)
+	var material = new THREE.MeshLambertMaterial({
+		color: '#222',
+		side : THREE.DoubleSide
+	})
+	var ground = new THREE.Mesh(geometry, material)
+	ground.rotateX(Math.PI/2)
+	groundRoot.add(ground)
+
+	var gridHelper = new THREE.GridHelper(2*distanceCharacter,2*distanceCharacter*10)
+	gridHelper.position.y = 0.01
+	groundRoot.add(gridHelper)
 	
 	var character = createCharacter()
 	character.root.position.x = 0
@@ -52,7 +90,7 @@ startUpTHREEjs({
 	function createCharacter(){
 		var character	= new THREEx.MinecraftChar()
 		character.root.scale.set(1,1,1).multiplyScalar(1.7)	// height in meter
-		ground.add(character.root)
+		groundRoot.add(character.root)
 
 
 		var headAnims	= new THREEx.MinecraftCharHeadAnimations(character);
