@@ -1,0 +1,3 @@
+[submodule "vendor/threex.minecraft.js"]
+	path = vendor/threex.minecraft.js
+	url = git@github.com:jeromeetienne/threex.minecraft.js.git
